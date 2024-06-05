@@ -17,20 +17,34 @@ function App() {
   }, []);
 
   const addToCart = (itemId) => {
-    axios.post('http://localhost:5001/api/cart', { itemId })
-      .then(response => setCartItems([...cartItems, response.data]))
-      .catch(error => console.error('Error adding to cart:', error));
+    const existingItem = cartItems.find(item => item.id === itemId);
+    if (existingItem) {
+      setCartItems(cartItems.map(item =>
+        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+      ));
+    } else {
+      axios.post('http://localhost:5001/api/cart', { itemId })
+        .then(response => setCartItems([...cartItems, { ...response.data, quantity: 1 }]))
+        .catch(error => console.error('Error adding to cart:', error));
+    }
   };
 
   const removeFromCart = (itemId) => {
-    axios.delete(`http://localhost:5001/api/cart/${itemId}`)
-      .then(response => setCartItems(cartItems.filter(item => item.id !== itemId)))
-      .catch(error => console.error('Error removing from cart:', error));
+    setCartItems(cartItems.filter(item => item.id !== itemId));
+  };
+
+  const updateQuantity = (itemId, increment) => {
+    setCartItems(cartItems.map(item =>
+      item.id === itemId ? { ...item, quantity: item.quantity + increment } : item
+    ).filter(item => item.quantity > 0));
   };
 
   const placeOrder = () => {
     axios.post('http://localhost:5001/api/order')
-      .then(response => setCartItems([]))
+      .then(response => {
+        setCartItems([]);
+        alert('Order placed successfully');
+      })
       .catch(error => console.error('Error placing order:', error));
   };
 
@@ -40,7 +54,7 @@ function App() {
       <div className="container mt-4">
         <Routes>
           <Route path="/" element={<Home menuItems={menuItems} cartItems={cartItems} addToCart={addToCart} />} />
-          <Route path="/cart" element={<Cart cartItems={cartItems} removeFromCart={removeFromCart} placeOrder={placeOrder} />} />
+          <Route path="/cart" element={<Cart cartItems={cartItems} removeFromCart={removeFromCart} updateQuantity={updateQuantity} placeOrder={placeOrder} />} />
         </Routes>
       </div>
     </Router>

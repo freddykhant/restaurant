@@ -14,7 +14,7 @@ function Home({ menuItems, cartItems, addToCart }) {
                 <Card.Text>{item.description}</Card.Text>
                 <Card.Text>${item.price}</Card.Text>
                 <Button
-                  variant={isInCart ? "secondary" : "primary"}
+                  variant={isInCart ? "secondary" : "warning"}
                   onClick={() => addToCart(item.id)}
                   disabled={isInCart}
                 >
