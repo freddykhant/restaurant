@@ -45,7 +45,7 @@ app.post('/api/order', (req, res) => {
 });
 
 // Start the server
-const PORT = 5000;
+const PORT = 5001; // Changed port from 5000 to 5001
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

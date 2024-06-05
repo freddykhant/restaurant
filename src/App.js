@@ -11,25 +11,25 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/menu')
+    axios.get('http://localhost:5001/api/menu')
       .then(response => setMenuItems(response.data))
       .catch(error => console.error('Error fetching menu:', error));
   }, []);
 
   const addToCart = (itemId) => {
-    axios.post('http://localhost:5000/api/cart', { itemId })
+    axios.post('http://localhost:5001/api/cart', { itemId })
       .then(response => setCartItems([...cartItems, response.data]))
       .catch(error => console.error('Error adding to cart:', error));
   };
 
   const removeFromCart = (itemId) => {
-    axios.delete(`http://localhost:5000/api/cart/${itemId}`)
+    axios.delete(`http://localhost:5001/api/cart/${itemId}`)
       .then(response => setCartItems(cartItems.filter(item => item.id !== itemId)))
       .catch(error => console.error('Error removing from cart:', error));
   };
 
   const placeOrder = () => {
-    axios.post('http://localhost:5000/api/order')
+    axios.post('http://localhost:5001/api/order')
       .then(response => setCartItems([]))
       .catch(error => console.error('Error placing order:', error));
   };
@@ -39,7 +39,7 @@ function App() {
       <NavbarComponent />
       <div className="container mt-4">
         <Routes>
-          <Route path="/" element={<Home menuItems={menuItems} addToCart={addToCart} />} />
+          <Route path="/" element={<Home menuItems={menuItems} cartItems={cartItems} addToCart={addToCart} />} />
           <Route path="/cart" element={<Cart cartItems={cartItems} removeFromCart={removeFromCart} placeOrder={placeOrder} />} />
         </Routes>
       </div>
