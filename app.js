@@ -6,6 +6,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+/* The Sushi 2016 Lunch Menu
+   Source: https://www.ubereats.com/au/store/the-sushi-2016-rivervale/RwzJd74wTVqwUItFcnqU6g?ps=1
+*/
+
 let menuItems = [
   { id: 1, name: "Chicken Avocado Nigiri", price: 3.50, description: "Four pieces.", imageUrl: "https://d1ralsognjng37.cloudfront.net/b5416336-4779-41eb-b798-87640d8185a2.jpeg" },
   { id: 2, name: "Salmon Avocado Nigiri", price: 3.50, description: "Four pieces.", imageUrl: "https://d1ralsognjng37.cloudfront.net/ce5cd03a-665f-4754-bd82-39f44bfbf5ae.jpeg" },

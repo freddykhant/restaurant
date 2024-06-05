@@ -6,7 +6,7 @@ function Cart({ cartItems, removeFromCart, updateQuantity, placeOrder }) {
 
   return (
     <div>
-      <Table striped bordered hover>
+      <Table>
         <thead>
           <tr>
             <th>Name</th>
